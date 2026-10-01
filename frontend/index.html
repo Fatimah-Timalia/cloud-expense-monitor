@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Cloud Expense Monitor</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+
+<body>
+
+    <!-- ========================================= -->
+    <!-- MAIN CONTAINER -->
+    <!-- ========================================= -->
+
+    <div class="container">
+
+
+        <!-- ========================================= -->
+        <!-- HEADER -->
+        <!-- ========================================= -->
+
+        <header class="header">
+
+            <div>
+
+                <h1>
+                    💰 Cloud Expense Monitor
+                </h1>
+
+                <p>
+                    Smart Expense Monitoring & Management
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                id="logoutBtn"
+                class="logout-btn"
+            >
+                Logout
+            </button>
+
+        </header>
+
+
+
+        <!-- ========================================= -->
+        <!-- LOGIN -->
+        <!-- ========================================= -->
+
+        <section
+            class="auth-box"
+            id="authBox"
+        >
+
+            <div class="section-icon">
+                🔐
+            </div>
+
+            <h2>
+                Welcome Back
+            </h2>
+
+            <p class="section-subtitle">
+                Login to manage your expenses
+            </p>
+
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Email"
+            >
+
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Password"
+            >
+
+
+            <button
+                type="button"
+                id="loginBtn"
+                class="primary-btn"
+            >
+                Login
+            </button>
+
+
+            <p id="message"></p>
+
+        </section>
+
+
+
+        <!-- ========================================= -->
+        <!-- DASHBOARD -->
+        <!-- ========================================= -->
+
+        <section
+            class="dashboard"
+            id="dashboard"
+        >
+
+
+            <div class="dashboard-heading">
+
+                <div>
+
+                    <h2>
+                        📊 Dashboard
+                    </h2>
+
+                    <p>
+                        Manage and monitor your spending
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ========================================= -->
+            <!-- SUMMARY CARDS -->
+            <!-- ========================================= -->
+
+            <div class="summary">
+
+
+                <div class="summary-card expenses-card">
+
+                    <div class="summary-icon">
+                        🧾
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Total Expenses
+                        </h3>
+
+                        <p id="totalExpenses">
+                            0
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="summary-card amount-card">
+
+                    <div class="summary-icon">
+                        💸
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Total Amount
+                        </h3>
+
+                        <p id="totalAmount">
+                            ₹0
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ========================================= -->
+<!-- ANALYTICS -->
+<!-- ========================================= -->
+
+<div class="analytics-section">
+
+    <div class="analytics-header">
+
+        <div>
+            <h3>📊 Spending Analytics</h3>
+            <p>Understand where your money is going</p>
+        </div>
+
+    </div>
+
+
+    <!-- ANALYTIC CARDS -->
+
+    <div class="analytics-cards">
+
+        <div class="analytics-card">
+
+            <span class="analytics-icon">
+                💸
+            </span>
+
+            <div>
+
+                <p>Highest Expense</p>
+
+                <h3 id="highestExpense">
+                    ₹0
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <div class="analytics-card">
+
+            <span class="analytics-icon">
+                📈
+            </span>
+
+            <div>
+
+                <p>Average Expense</p>
+
+                <h3 id="averageExpense">
+                    ₹0
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <div class="analytics-card">
+
+            <span class="analytics-icon">
+                🕐
+            </span>
+
+            <div>
+
+                <p>Recent Expense</p>
+
+                <h3 id="recentExpense">
+                    None
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CATEGORY BREAKDOWN -->
+
+    <div class="category-section">
+
+        <h3>
+            🏷️ Spending by Category
+        </h3>
+
+        <div id="categoryChart">
+
+            <p class="empty-message">
+                No category data available.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ========================================= -->
+<!-- EXPENSE CHARTS -->
+<!-- ========================================= -->
+
+<div class="charts-section">
+
+    <div class="analytics-header">
+
+        <h3>📊 Expense Charts</h3>
+
+        <p>
+            Visualize your spending patterns
+        </p>
+
+    </div>
+
+
+    <div class="charts-grid">
+
+        <!-- CATEGORY CHART -->
+
+        <div class="chart-card">
+
+            <h3>🏷️ Spending by Category</h3>
+
+            <div class="chart-container">
+
+                <canvas id="categoryChartCanvas"></canvas>
+
+            </div>
+
+        </div>
+
+
+        <!-- MONTHLY CHART -->
+
+        <div class="chart-card">
+
+            <h3>📅 Monthly Spending</h3>
+
+            <div class="chart-container">
+
+                <canvas id="monthlyChartCanvas"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ========================================= -->
+<!-- EXPENSE FILTERS -->
+<!-- ========================================= -->
+
+<div class="filter-section">
+
+    <div class="filter-header">
+
+        <div>
+            <h3>🔎 Filter Expenses</h3>
+            <p>Find expenses based on specific conditions</p>
+        </div>
+
+        <button
+            type="button"
+            id="clearFiltersBtn"
+            class="clear-filter-btn"
+        >
+            Clear Filters
+        </button>
+
+    </div>
+
+
+    <div class="filters">
+
+        <div class="filter-group">
+
+            <label for="filterMonth">
+                Month
+            </label>
+
+            <input
+                type="month"
+                id="filterMonth"
+            >
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="filterCategory">
+                Category
+            </label>
+
+            <select id="filterCategory">
+
+                <option value="">
+                    All Categories
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="minAmount">
+                Minimum Amount
+            </label>
+
+            <input
+                type="number"
+                id="minAmount"
+                placeholder="₹0"
+                min="0"
+            >
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="maxAmount">
+                Maximum Amount
+            </label>
+
+            <input
+                type="number"
+                id="maxAmount"
+                placeholder="₹99999"
+                min="0"
+            >
+
+        </div>
+
+    </div>
+
+
+    <button
+        type="button"
+        id="applyFiltersBtn"
+        class="apply-filter-btn"
+    >
+        🔍 Apply Filters
+    </button>
+
+</div>
+
+
+<!-- ========================================= -->
+<!-- MONTHLY SPENDING -->
+<!-- ========================================= -->
+
+<div class="monthly-section">
+
+    <div class="analytics-header">
+
+        <h3>📅 Monthly Spending</h3>
+
+        <p>
+            Track how your spending changes over time
+        </p>
+
+    </div>
+
+    <div id="monthlyChart">
+
+        <p class="empty-message">
+            No monthly data available.
+        </p>
+
+    </div>
+
+</div>
+            <!-- ========================================= -->
+            <!-- ACTION BUTTONS -->
+            <!-- ========================================= -->
+
+            <div class="actions-section">
+
+                <h3>
+                    Expense Actions
+                </h3>
+
+
+                <div class="action-buttons">
+
+
+                    <button
+                        type="button"
+                        id="openAddBtn"
+                        class="action-btn add-btn"
+                    >
+
+                        <span class="action-icon">
+                            ➕
+                        </span>
+
+                        <span>
+                            Add Expense
+                        </span>
+
+                    </button>
+
+
+
+                    <button
+                        type="button"
+                        id="openEditBtn"
+                        class="action-btn edit-btn"
+                    >
+
+                        <span class="action-icon">
+                            ✏️
+                        </span>
+
+                        <span>
+                            Edit Expense
+                        </span>
+
+                    </button>
+
+
+
+                    <button
+                        type="button"
+                        id="openDeleteBtn"
+                        class="action-btn delete-btn"
+                    >
+
+                        <span class="action-icon">
+                            🗑️
+                        </span>
+
+                        <span>
+                            Delete Expense
+                        </span>
+
+                    </button>
+
+
+
+                    <button
+                        type="button"
+                        id="openSearchBtn"
+                        class="action-btn search-btn"
+                    >
+
+                        <span class="action-icon">
+                            🔍
+                        </span>
+
+                        <span>
+                            Search Expense
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ========================================= -->
+            <!-- EXPENSE LIST -->
+            <!-- ========================================= -->
+
+            <div class="expense-section">
+
+
+                <div class="expense-heading">
+
+                    <div>
+
+                        <h3>
+                            💳 Your Expenses
+                        </h3>
+
+                        <p>
+                            All your recorded expenses
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="refreshBtn"
+                        class="refresh-btn"
+                    >
+                        🔄 Refresh
+                    </button>
+
+                </div>
+
+
+                <div id="expenseList">
+
+                    <p class="empty-message">
+                        No expenses found.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- ADD EXPENSE MODAL -->
+    <!-- ================================================= -->
+
+    <div
+        id="addModal"
+        class="modal"
+    >
+
+        <div class="modal-content">
+
+            <button
+                type="button"
+                class="close-btn"
+                id="closeAddBtn"
+            >
+                ×
+            </button>
+
+
+            <div class="modal-icon add-modal-icon">
+                ➕
+            </div>
+
+
+            <h2>
+                Add Expense
+            </h2>
+
+            <p class="modal-subtitle">
+                Record a new expense
+            </p>
+
+
+            <label>
+                Expense Title
+            </label>
+
+            <input
+                type="text"
+                id="addTitle"
+                placeholder="e.g. Grocery Shopping"
+            >
+
+
+            <label>
+                Amount
+            </label>
+
+            <input
+                type="number"
+                id="addAmount"
+                placeholder="e.g. 500"
+                min="0"
+                step="0.01"
+            >
+
+
+            <label>
+                Category
+            </label>
+
+            <input
+                type="text"
+                id="addCategory"
+                placeholder="e.g. Food"
+            >
+
+
+            <label>
+                Date
+            </label>
+
+            <input
+                type="date"
+                id="addDate"
+            >
+
+
+            <div class="modal-buttons">
+
+                <button
+                    type="button"
+                    id="cancelAddBtn"
+                    class="secondary-btn"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    id="saveAddBtn"
+                    class="primary-btn"
+                >
+                    Add Expense
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- EDIT EXPENSE MODAL -->
+    <!-- ================================================= -->
+
+    <div
+        id="editModal"
+        class="modal"
+    >
+
+        <div class="modal-content">
+
+            <button
+                type="button"
+                class="close-btn"
+                id="closeEditBtn"
+            >
+                ×
+            </button>
+
+
+            <div class="modal-icon edit-modal-icon">
+                ✏️
+            </div>
+
+
+            <h2>
+                Edit Expense
+            </h2>
+
+            <p class="modal-subtitle">
+                Update an existing expense
+            </p>
+
+
+            <label>
+                Expense ID
+            </label>
+
+            <input
+                type="number"
+                id="editId"
+                placeholder="Enter expense ID"
+                min="1"
+            >
+
+
+            <button
+                type="button"
+                id="loadEditBtn"
+                class="small-btn"
+            >
+                Load Expense
+            </button>
+
+
+            <div
+                id="editFields"
+                class="hidden"
+            >
+
+                <label>
+                    Expense Title
+                </label>
+
+                <input
+                    type="text"
+                    id="editTitle"
+                    placeholder="Expense title"
+                >
+
+
+                <label>
+                    Amount
+                </label>
+
+                <input
+                    type="number"
+                    id="editAmount"
+                    placeholder="Amount"
+                    min="0"
+                    step="0.01"
+                >
+
+
+                <label>
+                    Category
+                </label>
+
+                <input
+                    type="text"
+                    id="editCategory"
+                    placeholder="Category"
+                >
+
+
+                <label>
+                    Date
+                </label>
+
+                <input
+                    type="date"
+                    id="editDate"
+                >
+
+
+                <div class="modal-buttons">
+
+                    <button
+                        type="button"
+                        id="cancelEditBtn"
+                        class="secondary-btn"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="saveEditBtn"
+                        class="edit-save-btn"
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- DELETE EXPENSE MODAL -->
+    <!-- ================================================= -->
+
+    <div
+        id="deleteModal"
+        class="modal"
+    >
+
+        <div class="modal-content delete-modal">
+
+            <button
+                type="button"
+                class="close-btn"
+                id="closeDeleteBtn"
+            >
+                ×
+            </button>
+
+
+            <div class="modal-icon delete-modal-icon">
+                🗑️
+            </div>
+
+
+            <h2>
+                Delete Expense
+            </h2>
+
+            <p class="modal-subtitle">
+                Enter the ID of the expense you want to delete.
+            </p>
+
+
+            <label>
+                Expense ID
+            </label>
+
+            <input
+                type="number"
+                id="deleteId"
+                placeholder="e.g. 1"
+                min="1"
+            >
+
+
+            <div class="warning-box">
+
+                ⚠️
+                This action cannot be undone.
+
+            </div>
+
+
+            <div class="modal-buttons">
+
+                <button
+                    type="button"
+                    id="cancelDeleteBtn"
+                    class="secondary-btn"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    id="confirmDeleteBtn"
+                    class="danger-btn"
+                >
+                    Delete Expense
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- SEARCH EXPENSE MODAL -->
+    <!-- ================================================= -->
+
+    <div
+        id="searchModal"
+        class="modal"
+    >
+
+        <div class="modal-content search-modal">
+
+            <button
+                type="button"
+                class="close-btn"
+                id="closeSearchBtn"
+            >
+                ×
+            </button>
+
+
+            <div class="modal-icon search-modal-icon">
+                🔍
+            </div>
+
+
+            <h2>
+                Search Expense
+            </h2>
+
+            <p class="modal-subtitle">
+                Search by title, category, date or ID.
+            </p>
+
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="e.g. Food, Grocery, 2026-09-30, 3..."
+            >
+
+
+            <button
+                type="button"
+                id="searchBtn"
+                class="search-submit-btn"
+            >
+                🔍 Search
+            </button>
+
+
+            <div
+                id="searchResults"
+                class="search-results"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
