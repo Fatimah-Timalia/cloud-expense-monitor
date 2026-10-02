@@ -18,7 +18,9 @@ app = FastAPI(title="Cloud Expense Monitor")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://cloud-expense-monitor.netlify.app"
+        "https://cloud-expense-monitor.netlify.app",
+        "http://localhost:5500",
+        "http://127.0.0.1:5500"
         ],
     allow_credentials=True,
     allow_methods=["*"],
