@@ -17,12 +17,13 @@ from auth import (
 app = FastAPI(title="Cloud Expense Monitor")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://6abf48303a59e41f50a3cbf4--cloud-expense-monitor.netlify.app"],
+    allow_origins=[
+        "https://cloud-expense-monitor.netlify.app"
+        ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 Base.metadata.create_all(bind=engine)
 
