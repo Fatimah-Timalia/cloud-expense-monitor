@@ -44,13 +44,13 @@
             </div>
 
             <button
-                type="button"
-                id="logoutBtn"
-                class="logout-btn"
-            >
-                Logout
-            </button>
-
+    type="button"
+    id="logoutBtn"
+    class="logout-btn"
+    style="display: none;"
+>
+    Logout
+</button>
         </header>
 
 
@@ -91,20 +91,98 @@
             >
 
 
-            <button
-                type="button"
-                id="loginBtn"
-                class="primary-btn"
-            >
-                Login
-            </button>
+           <button
+    type="button"
+    id="loginBtn"
+    class="primary-btn"
+>
+    Login
+</button>
 
+<p class="auth-switch">
+    Don't have an account?
+    <button
+        type="button"
+        id="showRegisterBtn"
+        class="text-btn"
+    >
+        Create Account
+    </button>
+</p>
 
-            <p id="message"></p>
+<p id="message"></p>
 
         </section>
 
+        <!-- ========================================= -->
+<!-- REGISTER -->
+<!-- ========================================= -->
 
+<section
+    class="auth-box"
+    id="registerBox"
+    style="display: none;"
+>
+
+    <div class="section-icon">
+        📝
+    </div>
+
+    <h2>
+        Create Account
+    </h2>
+
+    <p class="section-subtitle">
+        Create your expense monitoring account
+    </p>
+
+
+    <input
+        type="text"
+        id="registerUsername"
+        placeholder="Username"
+    >
+
+
+    <input
+        type="email"
+        id="registerEmail"
+        placeholder="Email"
+    >
+
+
+    <input
+        type="password"
+        id="registerPassword"
+        placeholder="Password"
+    >
+
+
+    <button
+        type="button"
+        id="registerBtn"
+        class="primary-btn"
+    >
+        Create Account
+    </button>
+
+
+    <p class="auth-switch">
+        Already have an account?
+
+        <button
+            type="button"
+            id="showLoginBtn"
+            class="text-btn"
+        >
+            Login
+        </button>
+    </p>
+
+
+    <p id="registerMessage"></p>
+
+</section>
 
         <!-- ========================================= -->
         <!-- DASHBOARD -->

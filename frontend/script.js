@@ -46,21 +46,7 @@ document.addEventListener(
     "DOMContentLoaded",
     function () {
 
-        const token =
-            localStorage.getItem("token");
-
-        if (token) {
-
-            showDashboard();
-
-            loadDashboard();
-
-        }
-        else {
-
-            showLogin();
-
-        }
+        showLogin();
 
     }
 );
@@ -74,7 +60,132 @@ function showLogin() {
 
     authBox.style.display = "block";
 
+    document.getElementById("registerBox").style.display = "none";
+
     dashboard.style.display = "none";
+
+    document.getElementById("logoutBtn").style.display = "none";
+
+}
+// ==========================================
+// SHOW REGISTER
+// ==========================================
+
+function showRegister() {
+
+    authBox.style.display = "none";
+
+    document.getElementById("registerBox").style.display = "block";
+
+    dashboard.style.display = "none";
+
+}
+// ==========================================
+// REGISTER
+// ==========================================
+
+async function registerUser() {
+
+    const username =
+        document.getElementById("registerUsername").value.trim();
+
+    const email =
+        document.getElementById("registerEmail").value.trim();
+
+    const password =
+        document.getElementById("registerPassword").value;
+
+
+    const registerMessage =
+        document.getElementById("registerMessage");
+
+
+    if (!username || !email || !password) {
+
+        registerMessage.textContent =
+            "Please fill in all fields.";
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/register`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        username: username,
+                        email: email,
+                        password: password
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            registerMessage.textContent =
+                data.detail ||
+                "Registration failed.";
+
+            return;
+        }
+
+
+        registerMessage.textContent =
+            "Account created successfully! 🎉";
+
+
+        document.getElementById(
+            "registerUsername"
+        ).value = "";
+
+        document.getElementById(
+            "registerEmail"
+        ).value = "";
+
+        document.getElementById(
+            "registerPassword"
+        ).value = "";
+
+
+        setTimeout(
+            function () {
+
+                showLogin();
+
+                message.textContent =
+                    "Account created! Please login.";
+
+            },
+            1200
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "REGISTER ERROR:",
+            error
+        );
+
+        registerMessage.textContent =
+            "Unable to connect to server.";
+
+    }
 
 }
 
@@ -87,7 +198,11 @@ function showDashboard() {
 
     authBox.style.display = "none";
 
+    document.getElementById("registerBox").style.display = "none";
+
     dashboard.style.display = "block";
+
+    document.getElementById("logoutBtn").style.display = "block";
 
 }
 
@@ -1729,6 +1844,30 @@ document
     .addEventListener(
         "click",
         login
+    );
+    // REGISTER
+
+document
+    .getElementById("showRegisterBtn")
+    .addEventListener(
+        "click",
+        showRegister
+    );
+
+
+document
+    .getElementById("showLoginBtn")
+    .addEventListener(
+        "click",
+        showLogin
+    );
+
+
+document
+    .getElementById("registerBtn")
+    .addEventListener(
+        "click",
+        registerUser
     );
 
 

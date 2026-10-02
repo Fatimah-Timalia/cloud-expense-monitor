@@ -1481,3 +1481,27 @@ button:hover {
     }
 
 }
+/* ==========================================
+   AUTH SWITCH
+========================================== */
+
+.auth-switch {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.text-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 4px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    color: #6c63ff;
+}
+
+.text-btn:hover {
+    text-decoration: underline;
+}
